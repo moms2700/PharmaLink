@@ -1,18 +1,12 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
-
 export default function PharmaLink() {
   const [currentPage, setCurrentPage] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    window.addEventListener('scroll', () => setScrollY(window.scrollY));
-  }, []);
-
+  useEffect(() => { window.addEventListener('scroll', () => setScrollY(window.scrollY)); }, []);
   const handleSearch = () => {
     if (searchValue.trim()) {
       setSearchResults([
@@ -25,18 +19,7 @@ export default function PharmaLink() {
       setCurrentPage('results');
     }
   };
-
-  const medications = [
-    'Doliprane 1000mg', 'Paracétamol 500mg', 'Efferalgan 1g', 'Dafalgan 1g',
-    'Ibuprofène 400mg', 'Advil 400mg', 'Nurofen 200mg', 'Aspegic 1000mg',
-    'Amoxicilline 1g', 'Augmentin 1g', 'Azithromycine 250mg', 'Ciprofloxacine 500mg',
-    'Smecta', 'Gaviscon', 'Maalox', 'Spasfon', 'Motilium', 'Imodium',
-    'Rhinadvil', 'Humex Rhume', 'Clarityne', 'Rhinofébral', 'Toplexil Sirop', 'Ventoline Spray',
-    'Vitamine C', 'Vitamine D3', 'Magnésium', 'Calcium', 'Fer', 'Zinc',
-    'Bétadine Solution', 'Biafine Crème', 'Dacryoserum', 'Physiomer Spray', 'Homéoplasmine', 'Hexomédine',
-    'Kardegic 75mg', 'Aspirine 100mg', 'Cicatryl Pommade', 'Dermaclay Gel'
-  ];
-
+  const medications = ['Doliprane 1000mg', 'Paracétamol 500mg', 'Efferalgan 1g', 'Dafalgan 1g', 'Ibuprofène 400mg', 'Advil 400mg', 'Nurofen 200mg', 'Aspegic 1000mg', 'Amoxicilline 1g', 'Augmentin 1g', 'Azithromycine 250mg', 'Ciprofloxacine 500mg', 'Smecta', 'Gaviscon', 'Maalox', 'Spasfon', 'Motilium', 'Imodium', 'Rhinadvil', 'Humex Rhume', 'Clarityne', 'Rhinofébral', 'Toplexil Sirop', 'Ventoline Spray', 'Vitamine C', 'Vitamine D3', 'Magnésium', 'Calcium', 'Fer', 'Zinc', 'Bétadine Solution', 'Biafine Crème', 'Dacryoserum', 'Physiomer Spray', 'Homéoplasmine', 'Hexomédine', 'Kardegic 75mg', 'Aspirine 100mg', 'Cicatryl Pommade', 'Dermaclay Gel'];
   const pharmacies = [
     { id: 1, name: 'Pharmacie Centrale Alger', address: '12 Rue Didouche Mourad', distance: '0.8 km', hours: '08:00-22:00', phone: '+213 23 12 34 56', garde: false },
     { id: 2, name: 'Pharmacie Express 24h', address: '45 Avenue Indépendance', distance: '1.2 km', hours: '24/24', phone: '+213 23 45 67 89', garde: true },
@@ -49,21 +32,18 @@ export default function PharmaLink() {
     { id: 9, name: 'Pharmacie Bir Mourad Raïs', address: '12 Cité BM Raïs', distance: '3.5 km', hours: '08:00-19:30', phone: '+213 23 12 34 56', garde: false },
     { id: 10, name: 'Pharmacie Bordj El Kiffan', address: '45 Rue Bordj', distance: '4.8 km', hours: '08:00-20:30', phone: '+213 23 23 45 67', garde: true }
   ];
-
   return (
-    <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', backgroundColor: '#f8f9fa' }}>
+    <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
       <header style={{ position: 'fixed', top: 0, width: '100%', zIndex: 50, backgroundColor: 'white', borderBottom: '1px solid #e5e7eb', boxShadow: scrollY > 50 ? '0 1px 3px rgba(0,0,0,0.08)' : 'none', transition: 'box-shadow 0.3s ease' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#0066CC', margin: 0 }}>🏥 PharmaLink</h1>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ display: 'none', background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>☰</button>
           <nav style={{ display: 'flex', gap: '2rem' }}>
-            <button onClick={() => { setCurrentPage('home'); setSearchValue(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'home' ? '#0066CC' : '#666', fontWeight: currentPage === 'home' ? '600' : 'normal', transition: 'color 0.3s' }}>Accueil</button>
-            <button onClick={() => setCurrentPage('medications')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'medications' ? '#0066CC' : '#666', fontWeight: currentPage === 'medications' ? '600' : 'normal', transition: 'color 0.3s' }}>Médicaments</button>
-            <button onClick={() => setCurrentPage('pharmacies')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'pharmacies' ? '#0066CC' : '#666', fontWeight: currentPage === 'pharmacies' ? '600' : 'normal', transition: 'color 0.3s' }}>Pharmacies</button>
+            <button onClick={() => { setCurrentPage('home'); setSearchValue(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'home' ? '#0066CC' : '#666', fontWeight: currentPage === 'home' ? '600' : 'normal' }}>Accueil</button>
+            <button onClick={() => setCurrentPage('medications')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'medications' ? '#0066CC' : '#666', fontWeight: currentPage === 'medications' ? '600' : 'normal' }}>Médicaments</button>
+            <button onClick={() => setCurrentPage('pharmacies')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'pharmacies' ? '#0066CC' : '#666', fontWeight: currentPage === 'pharmacies' ? '600' : 'normal' }}>Pharmacies</button>
           </nav>
         </div>
       </header>
-
       {currentPage === 'home' && (
         <>
           <section style={{ marginTop: '80px', background: 'linear-gradient(135deg, #0066CC 0%, #00CC66 100%)', color: 'white', padding: '100px 20px', textAlign: 'center' }}>
@@ -71,15 +51,14 @@ export default function PharmaLink() {
             <p style={{ fontSize: '1.2rem', marginBottom: '40px' }}>PharmaLink - Disponibilité des médicaments en Algérie</p>
             <div style={{ maxWidth: '600px', margin: '0 auto 40px' }}>
               <input type="text" placeholder="Rechercher un médicament..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)} onKeyPress={(e) => { if (e.key === 'Enter') handleSearch(); }} style={{ width: '100%', padding: '15px', fontSize: '1rem', border: 'none', borderRadius: '8px', marginBottom: '15px', boxSizing: 'border-box' }} />
-              <button onClick={handleSearch} style={{ width: '100%', padding: '15px', backgroundColor: '#00CC66', color: 'white', fontSize: '1rem', fontWeight: 'bold', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background-color 0.3s' }} onMouseEnter={(e) => e.target.style.backgroundColor = '#00B050'} onMouseLeave={(e) => e.target.style.backgroundColor = '#00CC66'}>🔍 Rechercher</button>
+              <button onClick={handleSearch} style={{ width: '100%', padding: '15px', backgroundColor: '#00CC66', color: 'white', fontSize: '1rem', fontWeight: 'bold', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>🔍 Rechercher</button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px', maxWidth: '900px', margin: '60px auto 0' }}>
-              <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '25px', borderRadius: '8px' }}><div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>40+</div><div style={{ marginTop: '10px' }}>Médicaments</div></div>
-              <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '25px', borderRadius: '8px' }}><div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>10</div><div style={{ marginTop: '10px' }}>Pharmacies</div></div>
-              <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '25px', borderRadius: '8px' }}><div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>2h</div><div style={{ marginTop: '10px' }}>Réservation</div></div>
+              <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '25px', borderRadius: '8px' }}><div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>40+</div><div>Médicaments</div></div>
+              <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '25px', borderRadius: '8px' }}><div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>10</div><div>Pharmacies</div></div>
+              <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '25px', borderRadius: '8px' }}><div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>2h</div><div>Réservation</div></div>
             </div>
           </section>
-
           <section style={{ padding: '80px 20px', maxWidth: '1280px', margin: '0 auto' }}>
             <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '60px' }}>Comment ça marche ?</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '30px' }}>
@@ -90,7 +69,6 @@ export default function PharmaLink() {
           </section>
         </>
       )}
-
       {currentPage === 'medications' && (
         <section style={{ marginTop: '80px', padding: '40px 20px', maxWidth: '1280px', margin: '80px auto 0' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '40px' }}>40+ Médicaments Disponibles</h2>
@@ -104,7 +82,6 @@ export default function PharmaLink() {
           </div>
         </section>
       )}
-
       {currentPage === 'pharmacies' && (
         <section style={{ marginTop: '80px', padding: '40px 20px', maxWidth: '1280px', margin: '80px auto 0' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '40px' }}>10 Pharmacies à Alger</h2>
@@ -115,7 +92,6 @@ export default function PharmaLink() {
           </div>
         </section>
       )}
-
       {currentPage === 'results' && (
         <section style={{ marginTop: '80px', padding: '40px 20px', maxWidth: '1280px', margin: '80px auto 0' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '40px' }}>Résultats pour "{searchValue}"</h2>
@@ -132,11 +108,9 @@ export default function PharmaLink() {
           </div>
         </section>
       )}
-
       <footer style={{ backgroundColor: '#1a1a1a', color: 'white', padding: '50px 20px', textAlign: 'center', marginTop: '80px' }}>
         <p style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '10px' }}>© 2024 PharmaLink - Digitaliser l'accès aux médicaments en Algérie 🇩🇿</p>
         <p style={{ margin: '10px 0', fontSize: '0.9rem', color: '#aaa' }}>Équipe: Elyssa KESSAB • Ouslimani RAYAN • Mecheri CHAHINE • Ouahabi RATEB</p>
-        <p style={{ margin: '20px 0 0 0', fontSize: '0.85rem', color: '#888' }}>Une solution pour améliorer l'accès aux médicaments en Algérie</p>
       </footer>
     </div>
   );
