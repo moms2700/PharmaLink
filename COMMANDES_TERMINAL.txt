@@ -1,0 +1,83 @@
+==========================================================
+    PHARMALINK - COMMANDES POUR LE TERMINAL
+==========================================================
+
+Copiez-collez ces commandes dans Terminal (une par une)
+Remplacez "VOTRE_USERNAME" par votre vrai username GitHub
+
+==========================================================
+ÉTAPE 1 : Aller dans le projet
+==========================================================
+
+cd /Users/akliaitoumeziane/PharmaLink
+
+
+==========================================================
+ÉTAPE 2 : Ajouter le repository GitHub
+==========================================================
+
+AVANT d'exécuter cette commande :
+1. Créez votre repository sur : https://github.com/new
+2. Nommez-le "PharmaLink"
+3. Cochez "Public"
+4. Ne cochez RIEN d'autre
+5. Créez le repository
+
+Puis exécutez (REMPLACEZ "VOTRE_USERNAME") :
+
+git remote add origin https://github.com/VOTRE_USERNAME/PharmaLink.git
+
+
+==========================================================
+ÉTAPE 3 : Pousser le code sur GitHub
+==========================================================
+
+git push -u origin main
+
+Quand demandé :
+- Username : Votre username GitHub
+- Password : Votre mot de passe GitHub (ou Personal Access Token)
+
+
+==========================================================
+✅ C'EST FAIT !
+==========================================================
+
+Maintenant allez sur Vercel pour déployer :
+👉 https://vercel.com/signup
+
+Suivez les instructions dans :
+📄 🎯_INSTRUCTIONS_FINALES.md
+
+
+==========================================================
+AIDE RAPIDE
+==========================================================
+
+Vérifier le statut Git :
+    git status
+
+Voir l'historique :
+    git log --oneline
+
+Vérifier le remote :
+    git remote -v
+
+
+==========================================================
+ERREUR "Authentication failed" ?
+==========================================================
+
+Utilisez un Personal Access Token :
+
+1. Sur GitHub : Settings → Developer settings
+2. Personal access tokens → Generate new token (classic)
+3. Cochez "repo"
+4. Copiez le token généré
+5. Utilisez ce token comme mot de passe
+
+
+==========================================================
+    VOTRE SITE SERA SUR :
+    https://pharmalink-XXXX.vercel.app
+==========================================================
