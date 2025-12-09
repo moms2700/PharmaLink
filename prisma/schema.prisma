@@ -1,0 +1,101 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?
+  address   String?
+  wilaya    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+model Medicament {
+  id          String      @id @default(cuid())
+  name        String
+  dci         String      // Dénomination Commune Internationale
+  description String      @db.Text
+  price       Float
+  imageUrl    String?
+  category    String
+  dosage      String?
+  form        String?     // Forme : comprimé, sirop, gélule, etc.
+  stock       Int         @default(100)
+  available   Boolean     @default(true)
+  prescription Boolean    @default(false) // Nécessite ordonnance ou non
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+
+  @@index([category])
+  @@index([name])
+}
+
+model Pharmacy {
+  id        String   @id @default(cuid())
+  name      String
+  address   String
+  wilaya    String
+  commune   String
+  latitude  Float
+  longitude Float
+  phone     String
+  hours     String   // Horaires d'ouverture
+  isGuard   Boolean  @default(false) // Pharmacie de garde
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+
+  @@index([wilaya])
+  @@index([isGuard])
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        OrderStatus @default(PENDING)
+  total         Float
+  pharmacyId    String?
+  pharmacy      Pharmacy?   @relation(fields: [pharmacyId], references: [id])
+  reservedUntil DateTime?   // Réservation pendant 2h
+  notes         String?     @db.Text
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  items         OrderItem[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model OrderItem {
+  id           String     @id @default(cuid())
+  orderId      String
+  order        Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  medicamentId String
+  medicament   Medicament @relation(fields: [medicamentId], references: [id])
+  quantity     Int
+  price        Float
+  createdAt    DateTime   @default(now())
+
+  @@index([orderId])
+}
+
+enum OrderStatus {
+  PENDING   // En attente
+  RESERVED  // Réservé en pharmacie
+  COMPLETED // Récupéré
+  CANCELLED // Annulé
+  EXPIRED   // Réservation expirée
+}
