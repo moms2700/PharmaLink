@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { MapPin, Phone, Clock, Navigation } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import GoogleMap from '@/components/GoogleMap'
 
 interface Pharmacy {
   id: string
@@ -208,41 +209,12 @@ export default function PharmaciesPage() {
           <div className="lg:col-span-2">
             <Card className="h-[600px] overflow-hidden">
               <CardContent className="p-0 h-full">
-                <div className="h-full bg-gray-100 flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <MapPin className="w-16 h-16 text-primary-500 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      Carte Interactive
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      Pour activer la carte Google Maps, ajoutez votre clé API dans
-                      le fichier <code className="bg-gray-200 px-2 py-1 rounded">.env</code>
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      <strong>Variable :</strong> NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-                    </p>
-                    <div className="mt-6">
-                      {userLocation ? (
-                        <p className="text-sm text-green-600">
-                          ✅ Géolocalisation activée ({userLocation.lat.toFixed(4)},{' '}
-                          {userLocation.lng.toFixed(4)})
-                        </p>
-                      ) : (
-                        <p className="text-sm text-orange-600">
-                          ⏳ Géolocalisation en cours...
-                        </p>
-                      )}
-                    </div>
-                    {selectedPharmacy && (
-                      <div className="mt-6 bg-primary-50 p-4 rounded-lg">
-                        <p className="text-sm font-semibold text-primary-700 mb-2">
-                          Pharmacie sélectionnée :
-                        </p>
-                        <p className="text-sm text-gray-700">{selectedPharmacy.name}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <GoogleMap
+                  pharmacies={pharmacies}
+                  userLocation={userLocation}
+                  selectedPharmacy={selectedPharmacy}
+                  onPharmacySelect={setSelectedPharmacy}
+                />
               </CardContent>
             </Card>
           </div>
