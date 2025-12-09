@@ -30,24 +30,33 @@ export default function PharmaLink() {
   }
 
   const Navigation = () => (
-    <header style={{
-      position:'fixed', top:0, width:'100%', zIndex:50, background:'#fff', borderBottom:'1px solid #e5e7eb',
-      boxShadow: scrollY > 50 ? '0 1px 3px rgba(0,0,0,0.08)' : 'none'
-    }}>
+    <header
+      style={{
+        position:'fixed', top:0, width:'100%', zIndex:50, background:'#fff',
+        borderBottom:'1px solid #e5e7eb',
+        boxShadow: scrollY > 50 ? '0 1px 3px rgba(0,0,0,0.08)' : 'none'
+      }}
+    >
       <div style={{ maxWidth:1152, margin:'0 auto', padding:'16px 24px' }}>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
           <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-            <div style={{ width:36, height:36, borderRadius:8, display:'grid', placeItems:'center',
-              background:'linear-gradient(135deg,#0066CC,#00CC66)', color:'#fff', fontWeight:700 }}>PL</div>
+            <div style={{
+              width:36, height:36, borderRadius:8, display:'grid', placeItems:'center',
+              background:'linear-gradient(135deg,#0066CC,#00CC66)', color:'#fff', fontWeight:700
+            }}>PL</div>
             <span style={{ fontWeight:700, color:'#0f172a', fontSize:18 }}>PharmaLink</span>
           </div>
           <nav style={{ display:'flex', alignItems:'center', gap:16 }}>
             <button onClick={() => setCurrentPage('home')} style={navBtn(currentPage==='home')}>Accueil</button>
             <button onClick={() => setCurrentPage('medications')} style={navBtn(currentPage==='medications')}>Médicaments</button>
             <button onClick={() => setCurrentPage('pharmacies')} style={navBtn(currentPage==='pharmacies')}>Pharmacies</button>
-            <button onClick={() => setMobileMenuOpen(v => !v)} style={{
-              border:'1px solid #e5e7eb', background:'#fff', color:'#0f172a', borderRadius:8, padding:'8px 12px', cursor:'pointer'
-            }}>{mobileMenuOpen ? 'Fermer' : 'Menu'}</button>
+            <button
+              onClick={() => setMobileMenuOpen(v => !v)}
+              style={{
+                border:'1px solid #e5e7eb', background:'#fff', color:'#0f172a',
+                borderRadius:8, padding:'8px 12px', cursor:'pointer'
+              }}
+            >{mobileMenuOpen ? 'Fermer' : 'Menu'}</button>
           </nav>
         </div>
       </div>
@@ -61,10 +70,18 @@ export default function PharmaLink() {
         <p style={{ opacity:.9, marginBottom:24 }}>PharmaLink — Disponibilité des médicaments en Algérie</p>
         <div style={{ maxWidth:640, margin:'0 auto' }}>
           <div style={{ display:'flex', gap:12 }}>
-            <input type="text" value={searchValue} onChange={(e)=>setSearchValue(e.target.value)} placeholder="Rechercher un médicament..."
+            <input
+              type="text"
+              value={searchValue}
+              onChange={(e)=>setSearchValue(e.target.value)}
+              placeholder="Rechercher un médicament..."
               onKeyDown={(e)=>{ if (e.key==='Enter') handleSearch(); }}
-              style={{ flex:1, padding:14, borderRadius:8, border:'none', background:'rgba(255,255,255,0.15)', color:'#fff' }} />
-            <button onClick={handleSearch} style={{ padding:'12px 16px', borderRadius:8, border:'none', background:'#fff', color:'#0f172a', fontWeight:700, cursor:'pointer' }}>
+              style={{ flex:1, padding:14, borderRadius:8, border:'none', background:'rgba(255,255,255,0.15)', color:'#fff' }}
+            />
+            <button
+              onClick={handleSearch}
+              style={{ padding:'12px 16px', borderRadius:8, border:'none', background:'#fff', color:'#0f172a', fontWeight:700, cursor:'pointer' }}
+            >
               🔍 Rechercher
             </button>
           </div>
