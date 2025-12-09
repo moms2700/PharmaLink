@@ -48,9 +48,13 @@ export default function PharmaLink() {
             <button onClick={() => setCurrentPage('home')} style={navBtn(currentPage==='home')}>Accueil</button>
             <button onClick={() => setCurrentPage('medications')} style={navBtn(currentPage==='medications')}>Médicaments</button>
             <button onClick={() => setCurrentPage('pharmacies')} style={navBtn(currentPage==='pharmacies')}>Pharmacies</button>
-            <button onClick={() => setMobileMenuOpen(v => !v)} style={{
-              border:'1px solid #e5e7eb', background:'#fff', color:'#0f172a', borderRadius:8, padding:'8px 12px', cursor:'pointer'
-            }}>{mobileMenuOpen ? 'Fermer' : 'Menu'}</button>
+            <button
+              onClick={() => setMobileMenuOpen(v => !v)}
+              style={{
+                border:'1px solid #e5e7eb', background:'#fff', color:'#0f172a',
+                borderRadius:8, padding:'8px 12px', cursor:'pointer'
+              }}
+            >{mobileMenuOpen ? 'Fermer' : 'Menu'}</button>
           </nav>
         </div>
       </div>
@@ -64,18 +68,10 @@ export default function PharmaLink() {
         <p style={{ opacity:.9, marginBottom:24 }}>PharmaLink — Disponibilité des médicaments en Algérie</p>
         <div style={{ maxWidth:640, margin:'0 auto' }}>
           <div style={{ display:'flex', gap:12 }}>
-            <input
-              type="text"
-              value={searchValue}
-              onChange={(e)=>setSearchValue(e.target.value)}
-              placeholder="Rechercher un médicament..."
+            <input type="text" value={searchValue} onChange={(e)=>setSearchValue(e.target.value)} placeholder="Rechercher un médicament..."
               onKeyDown={(e)=>{ if (e.key==='Enter') handleSearch(); }}
-              style={{ flex:1, padding:14, borderRadius:8, border:'none', background:'rgba(255,255,255,0.15)', color:'#fff' }}
-            />
-            <button
-              onClick={handleSearch}
-              style={{ padding:'12px 16px', borderRadius:8, border:'none', background:'#fff', color:'#0f172a', fontWeight:700, cursor:'pointer' }}
-            >
+              style={{ flex:1, padding:14, borderRadius:8, border:'none', background:'rgba(255,255,255,0.15)', color:'#fff' }} />
+            <button onClick={handleSearch} style={{ padding:'12px 16px', borderRadius:8, border:'none', background:'#fff', color:'#0f172a', fontWeight:700, cursor:'pointer' }}>
               🔍 Rechercher
             </button>
           </div>
@@ -149,7 +145,7 @@ export default function PharmaLink() {
                   <div key={r.id} style={{ background:'#fff', border:'1px solid #e5e7eb', boxShadow:'0 1px 2px rgba(0,0,0,0.06)', borderLeft:'4px solid #22c55e', borderRadius:8, padding:16 }}>
                     <div style={{ fontWeight:700 }}>{r.name}</div>
                     <div style={{ color:'#64748b' }}>📏 {r.distance}</div>
-                    <div style={{ color:'#64748b' }}>🕐 {r.hours}</div>
+                    <div style={{ color:'#64748b' }}>�� {r.hours}</div>
                     <div style={{ color: r.available ? '#16a34a' : '#ef4444', fontWeight:700, marginTop:6 }}>
                       {r.available ? '✅ Disponible' : '❌ Non disponible'}
                     </div>
