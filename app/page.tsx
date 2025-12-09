@@ -52,24 +52,18 @@ export default function PharmaLink() {
 
   return (
     <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', backgroundColor: '#f8f9fa' }}>
-      {/* NAVBAR */}
-      <header style={{
-        position: 'fixed', top: 0, width: '100%', zIndex: 50,
-        backgroundColor: 'white', borderBottom: '1px solid #e5e7eb',
-        boxShadow: scrollY > 50 ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
-        transition: 'box-shadow 0.3s'
-      }}>
+      <header style={{ position: 'fixed', top: 0, width: '100%', zIndex: 50, backgroundColor: 'white', borderBottom: '1px solid #e5e7eb', boxShadow: scrollY > 50 ? '0 1px 3px rgba(0,0,0,0.08)' : 'none', transition: 'box-shadow 0.3s ease' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '1rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#0066CC', margin: 0 }}>🏥 PharmaLink</h1>
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ display: 'none', background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>☰</button>
           <nav style={{ display: 'flex', gap: '2rem' }}>
-            <button onClick={() => setCurrentPage('home')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'home' ? '#0066CC' : '#666', fontWeight: currentPage === 'home' ? '600' : 'normal' }}>Accueil</button>
-            <button onClick={() => setCurrentPage('medications')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'medications' ? '#0066CC' : '#666', fontWeight: currentPage === 'medications' ? '600' : 'normal' }}>Médicaments</button>
-            <button onClick={() => setCurrentPage('pharmacies')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'pharmacies' ? '#0066CC' : '#666', fontWeight: currentPage === 'pharmacies' ? '600' : 'normal' }}>Pharmacies</button>
+            <button onClick={() => { setCurrentPage('home'); setSearchValue(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'home' ? '#0066CC' : '#666', fontWeight: currentPage === 'home' ? '600' : 'normal', transition: 'color 0.3s' }}>Accueil</button>
+            <button onClick={() => setCurrentPage('medications')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'medications' ? '#0066CC' : '#666', fontWeight: currentPage === 'medications' ? '600' : 'normal', transition: 'color 0.3s' }}>Médicaments</button>
+            <button onClick={() => setCurrentPage('pharmacies')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.95rem', color: currentPage === 'pharmacies' ? '#0066CC' : '#666', fontWeight: currentPage === 'pharmacies' ? '600' : 'normal', transition: 'color 0.3s' }}>Pharmacies</button>
           </nav>
         </div>
       </header>
 
-      {/* HOME PAGE */}
       {currentPage === 'home' && (
         <>
           <section style={{ marginTop: '80px', background: 'linear-gradient(135deg, #0066CC 0%, #00CC66 100%)', color: 'white', padding: '100px 20px', textAlign: 'center' }}>
@@ -77,7 +71,7 @@ export default function PharmaLink() {
             <p style={{ fontSize: '1.2rem', marginBottom: '40px' }}>PharmaLink - Disponibilité des médicaments en Algérie</p>
             <div style={{ maxWidth: '600px', margin: '0 auto 40px' }}>
               <input type="text" placeholder="Rechercher un médicament..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)} onKeyPress={(e) => { if (e.key === 'Enter') handleSearch(); }} style={{ width: '100%', padding: '15px', fontSize: '1rem', border: 'none', borderRadius: '8px', marginBottom: '15px', boxSizing: 'border-box' }} />
-              <button onClick={handleSearch} style={{ width: '100%', padding: '15px', backgroundColor: '#00CC66', color: 'white', fontSize: '1rem', fontWeight: 'bold', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>🔍 Rechercher</button>
+              <button onClick={handleSearch} style={{ width: '100%', padding: '15px', backgroundColor: '#00CC66', color: 'white', fontSize: '1rem', fontWeight: 'bold', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background-color 0.3s' }} onMouseEnter={(e) => e.target.style.backgroundColor = '#00B050'} onMouseLeave={(e) => e.target.style.backgroundColor = '#00CC66'}>🔍 Rechercher</button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px', maxWidth: '900px', margin: '60px auto 0' }}>
               <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '25px', borderRadius: '8px' }}><div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>40+</div><div style={{ marginTop: '10px' }}>Médicaments</div></div>
@@ -89,22 +83,21 @@ export default function PharmaLink() {
           <section style={{ padding: '80px 20px', maxWidth: '1280px', margin: '0 auto' }}>
             <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '60px' }}>Comment ça marche ?</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '30px' }}>
-              <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', textAlign: 'center', cursor: 'pointer', transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}><div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>1️⃣</div><h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '10px' }}>Recherchez</h3><p style={{ color: '#666' }}>Trouvez votre médicament par nom</p></div>
-              <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', textAlign: 'center', cursor: 'pointer', transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}><div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>2️⃣</div><h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '10px' }}>Localisez</h3><p style={{ color: '#666' }}>Voyez les pharmacies proches</p></div>
-              <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', textAlign: 'center', cursor: 'pointer', transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}><div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>3️⃣</div><h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '10px' }}>Réservez</h3><p style={{ color: '#666' }}>Réservez pendant 2 heures</p></div>
+              <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', textAlign: 'center', cursor: 'pointer', transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}><div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>1️⃣</div><h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '10px' }}>Recherchez</h3><p style={{ color: '#666' }}>Trouvez votre médicament par nom ou DCI</p></div>
+              <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', textAlign: 'center', cursor: 'pointer', transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}><div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>2️⃣</div><h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '10px' }}>Localisez</h3><p style={{ color: '#666' }}>Voyez les pharmacies les plus proches</p></div>
+              <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', textAlign: 'center', cursor: 'pointer', transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}><div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>3️⃣</div><h3 style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '10px' }}>Réservez</h3><p style={{ color: '#666' }}>Réservez pendant 2 heures et récupérez en pharmacie</p></div>
             </div>
           </section>
         </>
       )}
 
-      {/* MEDICATIONS PAGE */}
       {currentPage === 'medications' && (
         <section style={{ marginTop: '80px', padding: '40px 20px', maxWidth: '1280px', margin: '80px auto 0' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '40px' }}>40+ Médicaments Disponibles</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '15px' }}>
             {medications.map((med, i) => (
               <div key={i} style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', textAlign: 'center', cursor: 'pointer', transition: 'all 0.3s' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)'; }}>
-                <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>{med}</p>
+                <p style={{ fontWeight: 'bold', marginBottom: '10px', fontSize: '0.95rem' }}>{med}</p>
                 <p style={{ color: '#0066CC', fontSize: '0.9rem' }}>🛒 Ajouter au panier</p>
               </div>
             ))}
@@ -112,20 +105,17 @@ export default function PharmaLink() {
         </section>
       )}
 
-      {/* PHARMACIES PAGE */}
       {currentPage === 'pharmacies' && (
         <section style={{ marginTop: '80px', padding: '40px 20px', maxWidth: '1280px', margin: '80px auto 0' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '40px' }}>10 Pharmacies à Alger</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
             {pharmacies.map((pharm) => (
-              <div key={pharm.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', borderLeft: '4px solid #0066CC', transition: 'all 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)'}><div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '10px' }}><h3 style={{ fontWeight: 'bold', margin: 0, flex: 1 }}>{pharm.name}</h3>{pharm.garde && <span style={{ backgroundColor: '#FF6B6B', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', whiteSpace: 'nowrap', marginLeft: '10px' }}>De Garde</span>}</div><p style={{ color: '#666', margin: '10px 0', fontSize: '0.9rem' }}>📍 {pharm.address}</p><p style={{ color: '#666', margin: '5px 0', fontSize: '0.9rem' }}>📏 {pharm.distance}</p><p style={{ color: '#666', margin: '5px 0', fontSize: '0.9rem' }}>🕐 {pharm.hours}</p><p style={{ color: '#0066CC', margin: '10px 0', fontSize: '0.9rem', cursor: 'pointer' }}>📞 {pharm.phone}</p><button style={{ width: '100%', marginTop: '15px', padding: '10px', backgroundColor: '#0066CC', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', transition: 'background-color 0.3s' }} onMouseEnter={(e) => e.target.style.backgroundColor = '#0052A3'} onMouseLeave={(e) => e.target.style.backgroundColor = '#0066CC'}>🗺️ Voir sur la carte</button>
-              </div>
+              <div key={pharm.id} style={{ backgroundColor: 'white', padding: '25px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', borderLeft: '4px solid #0066CC', transition: 'all 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)'}><div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '10px' }}><h3 style={{ fontWeight: 'bold', margin: 0, flex: 1 }}>{pharm.name}</h3>{pharm.garde && <span style={{ backgroundColor: '#FF6B6B', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', whiteSpace: 'nowrap', marginLeft: '10px' }}>De Garde</span>}</div><p style={{ color: '#666', margin: '10px 0', fontSize: '0.9rem' }}>📍 {pharm.address}</p><p style={{ color: '#666', margin: '5px 0', fontSize: '0.9rem' }}>📏 {pharm.distance}</p><p style={{ color: '#666', margin: '5px 0', fontSize: '0.9rem' }}>🕐 {pharm.hours}</p><p style={{ color: '#0066CC', margin: '10px 0', fontSize: '0.9rem', cursor: 'pointer' }}>📞 {pharm.phone}</p><button style={{ width: '100%', marginTop: '15px', padding: '10px', backgroundColor: '#0066CC', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', transition: 'background-color 0.3s' }} onMouseEnter={(e) => e.target.style.backgroundColor = '#0052A3'} onMouseLeave={(e) => e.target.style.backgroundColor = '#0066CC'}>🗺️ Voir sur la carte</button></div>
             ))}
           </div>
         </section>
       )}
 
-      {/* RESULTS PAGE */}
       {currentPage === 'results' && (
         <section style={{ marginTop: '80px', padding: '40px 20px', maxWidth: '1280px', margin: '80px auto 0' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '40px' }}>Résultats pour "{searchValue}"</h2>
@@ -136,17 +126,17 @@ export default function PharmaLink() {
                 <p style={{ color: '#666', margin: '5px 0' }}>📏 {result.distance}</p>
                 <p style={{ color: '#666', margin: '5px 0' }}>🕐 {result.hours}</p>
                 <p style={{ color: result.available ? '#00CC66' : '#FF6B6B', margin: '10px 0', fontWeight: 'bold' }}>{result.available ? '✅ Disponible' : '❌ Non disponible'}</p>
-                <button style={{ width: '100%', marginTop: '15px', padding: '10px', backgroundColor: '#0066CC', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Réserver</button>
+                <button style={{ width: '100%', marginTop: '15px', padding: '10px', backgroundColor: '#0066CC', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', transition: 'background-color 0.3s' }} onMouseEnter={(e) => e.target.style.backgroundColor = '#0052A3'} onMouseLeave={(e) => e.target.style.backgroundColor = '#0066CC'}>Réserver</button>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      {/* FOOTER */}
       <footer style={{ backgroundColor: '#1a1a1a', color: 'white', padding: '50px 20px', textAlign: 'center', marginTop: '80px' }}>
         <p style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '10px' }}>© 2024 PharmaLink - Digitaliser l'accès aux médicaments en Algérie 🇩🇿</p>
         <p style={{ margin: '10px 0', fontSize: '0.9rem', color: '#aaa' }}>Équipe: Elyssa KESSAB • Ouslimani RAYAN • Mecheri CHAHINE • Ouahabi RATEB</p>
+        <p style={{ margin: '20px 0 0 0', fontSize: '0.85rem', color: '#888' }}>Une solution pour améliorer l'accès aux médicaments en Algérie</p>
       </footer>
     </div>
   );
