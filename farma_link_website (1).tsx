@@ -25,6 +25,16 @@ export default function PharmaLink() {
     }
   };
 
+  function navBtn(active: boolean): React.CSSProperties {
+    return {
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      color: active ? '#0066CC' : '#64748b',
+      fontWeight: active ? 700 : 500
+    };
+  }
+
   const Navigation = () => (
     <header
       style={{
@@ -79,6 +89,7 @@ export default function PharmaLink() {
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Rechercher un médicament (Doliprane, Ibuprofène...)"
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
               style={{
                 flex: 1, padding: 14, borderRadius: 8, border: 'none',
                 background: 'rgba(255,255,255,0.15)', color: '#fff'
@@ -213,14 +224,4 @@ export default function PharmaLink() {
       </footer>
     </div>
   );
-}
-
-function navBtn(active: boolean): React.CSSProperties {
-  return {
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: active ? '#0066CC' : '#64748b',
-    fontWeight: active ? 700 : 500
-  };
 }
