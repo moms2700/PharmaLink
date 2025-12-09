@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { MapPin, Phone, Clock, Navigation } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import GoogleMap from '@/components/GoogleMap'
+import LeafletMap from '@/components/LeafletMapWrapper'
 
 interface Pharmacy {
   id: string
@@ -209,7 +209,7 @@ export default function PharmaciesPage() {
           <div className="lg:col-span-2">
             <Card className="h-[600px] overflow-hidden">
               <CardContent className="p-0 h-full">
-                <GoogleMap
+                <LeafletMap
                   pharmacies={pharmacies}
                   userLocation={userLocation}
                   selectedPharmacy={selectedPharmacy}
