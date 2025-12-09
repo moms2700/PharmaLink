@@ -1,216 +1,85 @@
-'use client'
+'use client';
+import React, { useEffect, useState } from 'react';
 
-import { useState, useEffect } from 'react'
-import { Search, Filter } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import MedicamentCard from '@/components/MedicamentCard'
+type Medicament = {
+  id: number;
+  name: string;
+  dci?: string;
+  description?: string;
+  price: number;
+  category: string;
+  form?: string;
+  imageUrl?: string;
+  stock?: number;
+  prescription?: boolean;
+};
 
-interface Medicament {
-  id: string
-  name: string
-  dci: string
-  price: number
-  imageUrl: string | null
-  category: string
-  stock: number
-  prescription: boolean
-}
+const fallback: Medicament[] = [
+  { id: 1, name: 'Paracétamol 500mg x16', price: 250, category: 'Douleur', imageUrl: 'https://images.unsplash.com/photo-1587017620151-3b6a957b5a58?w=400' },
+  { id: 2, name: 'Ibuprofène 400mg x12', price: 350, category: 'Douleur', imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400' },
+  { id: 3, name: 'Préservatifs Durex Classic x12', price: 650, category: 'Contraception', imageUrl: 'https://images.unsplash.com/photo-1613769528463-0f0448a63a7b?w=400' },
+  { id: 4, name: 'Vitamine D3 1000 UI x30', price: 900, category: 'Vitamines', imageUrl: 'https://images.unsplash.com/photo-1582738412016-b6c2b44b3e6b?w=400' },
+];
 
-const categories = [
-  'Tous',
-  'Antalgique/Antipyrétique',
-  'Anti-inflammatoire',
-  'Antibiotique',
-  'Système Digestif',
-  'Système Respiratoire',
-  'Vitamines',
-  'Soins & Hygiène',
-  'Cardiovasculaire',
-  'Dermatologie',
-]
-
-export default function MedicamentsPage() {
-  const [medicaments, setMedicaments] = useState<Medicament[]>([])
-  const [filteredMedicaments, setFilteredMedicaments] = useState<Medicament[]>([])
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('Tous')
-  const [showOnlyAvailable, setShowOnlyAvailable] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+export default function Page() {
+  const [data, setData] = useState<Medicament[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchMedicaments()
-  }, [])
-
-  useEffect(() => {
-    filterMedicaments()
-  }, [searchQuery, selectedCategory, showOnlyAvailable, medicaments])
-
-  const fetchMedicaments = async () => {
-    try {
-      const response = await fetch('/api/medicaments')
-      const data = await response.json()
-      setMedicaments(data)
-      setFilteredMedicaments(data)
-    } catch (error) {
-      console.error('Erreur lors du chargement des médicaments:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const filterMedicaments = () => {
-    let filtered = [...medicaments]
-
-    // Filtre par recherche
-    if (searchQuery) {
-      filtered = filtered.filter(
-        (med) =>
-          med.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          med.dci.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    }
-
-    // Filtre par catégorie
-    if (selectedCategory !== 'Tous') {
-      filtered = filtered.filter((med) => med.category === selectedCategory)
-    }
-
-    // Filtre disponibilité
-    if (showOnlyAvailable) {
-      filtered = filtered.filter((med) => med.stock > 0)
-    }
-
-    setFilteredMedicaments(filtered)
-  }
+    const run = async () => {
+      try {
+        const res = await fetch('/api/medicaments', { next: { revalidate: 0 } });
+        if (!res.ok) throw new Error('fetch failed');
+        const json = await res.json();
+        if (Array.isArray(json) && json.length) setData(json);
+        else setData(fallback);
+      } catch {
+        setData(fallback);
+      } finally {
+        setLoading(false);
+      }
+    };
+    run();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            Catalogue des médicaments
-          </h1>
-          <p className="text-gray-600">
-            Parcourez notre sélection de 40+ médicaments disponibles
-          </p>
-        </div>
+    <div style={{ fontFamily: 'system-ui,-apple-system,sans-serif' }}>
+      <header style={{ padding: '24px', borderBottom: '1px solid #e5e7eb' }}>
+        <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 800 }}>Médicaments</h1>
+        <p style={{ color: '#64748b', marginTop: 8 }}>Catalogue avec images et prix (DA)</p>
+      </header>
 
-        {/* Barre de recherche */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <Input
-                  type="text"
-                  placeholder="Rechercher un médicament par nom ou DCI..."
-                  className="pl-10"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+      {loading ? (
+        <div style={{ padding: 24 }}>Chargement...</div>
+      ) : data.length === 0 ? (
+        <div style={{ padding: 24 }}>Aucun médicament disponible.</div>
+      ) : (
+        <main style={{ padding: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: 16 }}>
+            {data.map((m) => (
+              <div key={m.id} style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, overflow: 'hidden', boxShadow: '0 1px 2px rgba(0,0,0,.06)' }}>
+                <div style={{ width: '100%', height: 150, background: '#f1f5f9', display: 'grid', placeItems: 'center' }}>
+                  {m.imageUrl ? (
+                    <img src={m.imageUrl} alt={m.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ color: '#64748b' }}>Image indisponible</span>
+                  )}
+                </div>
+                <div style={{ padding: 12 }}>
+                  <div style={{ fontWeight: 700 }}>{m.name}</div>
+                  {m.category && <div style={{ color: '#64748b', fontSize: 12, marginTop: 4 }}>{m.category}</div>}
+                  <div style={{ marginTop: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ fontWeight: 800, color: '#0f172a' }}>{m.price} DA</div>
+                    <button style={{ border: 'none', padding: '8px 12px', borderRadius: 6, background: '#0066CC', color: '#fff', cursor: 'pointer' }}>
+                      Ajouter
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-            <Button variant="outline" className="md:w-auto">
-              <Filter className="w-4 h-4 mr-2" />
-              Filtrer
-            </Button>
-          </div>
-        </div>
-
-        {/* Filtres */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex flex-col space-y-4">
-            {/* Catégories */}
-            <div>
-              <h3 className="font-semibold mb-3 text-gray-900">Catégories</h3>
-              <div className="flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-                      selectedCategory === category
-                        ? 'bg-primary-500 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Disponibilité */}
-            <div>
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showOnlyAvailable}
-                  onChange={(e) => setShowOnlyAvailable(e.target.checked)}
-                  className="w-4 h-4 text-primary-500 rounded focus:ring-primary-500"
-                />
-                <span className="text-sm font-medium text-gray-700">
-                  Afficher uniquement les médicaments disponibles
-                </span>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        {/* Résultats */}
-        <div className="mb-4">
-          <p className="text-gray-600">
-            <span className="font-semibold">{filteredMedicaments.length}</span>{' '}
-            médicament(s) trouvé(s)
-          </p>
-        </div>
-
-        {/* Grille de médicaments */}
-        {isLoading ? (
-          <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary-500 border-t-transparent"></div>
-            <p className="mt-4 text-gray-600">Chargement des médicaments...</p>
-          </div>
-        ) : filteredMedicaments.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredMedicaments.map((medicament) => (
-              <MedicamentCard
-                key={medicament.id}
-                id={medicament.id}
-                name={medicament.name}
-                dci={medicament.dci}
-                price={medicament.price}
-                imageUrl={medicament.imageUrl || undefined}
-                category={medicament.category}
-                stock={medicament.stock}
-                prescription={medicament.prescription}
-              />
             ))}
           </div>
-        ) : (
-          <div className="text-center py-12 bg-white rounded-lg shadow-md">
-            <div className="text-6xl mb-4">😔</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Aucun médicament trouvé
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Essayez de modifier vos critères de recherche
-            </p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSearchQuery('')
-                setSelectedCategory('Tous')
-                setShowOnlyAvailable(false)
-              }}
-            >
-              Réinitialiser les filtres
-            </Button>
-          </div>
-        )}
-      </div>
+        </main>
+      )}
     </div>
-  )
+  );
 }

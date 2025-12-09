@@ -1,46 +1,20 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+export const dynamic = 'force-dynamic';
 
-export const dynamic = 'force-dynamic'
+type Medicament = {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  imageUrl?: string;
+};
 
-export async function GET(request: NextRequest) {
-  try {
-    const searchParams = request.nextUrl.searchParams
-    const search = searchParams.get('search')
-    const category = searchParams.get('category')
-    const available = searchParams.get('available')
+const data: Medicament[] = [
+  { id: 1, name: 'Paracétamol 500mg x16', price: 250, category: 'Douleur', imageUrl: 'https://images.unsplash.com/photo-1587017620151-3b6a957b5a58?w=400' },
+  { id: 2, name: 'Ibuprofène 400mg x12', price: 350, category: 'Douleur', imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400' },
+  { id: 3, name: 'Préservatifs Durex Classic x12', price: 650, category: 'Contraception', imageUrl: 'https://images.unsplash.com/photo-1613769528463-0f0448a63a7b?w=400' },
+  { id: 4, name: 'Vitamine D3 1000 UI x30', price: 900, category: 'Vitamines', imageUrl: 'https://images.unsplash.com/photo-1582738412016-b6c2b44b3e6b?w=400' },
+];
 
-    const where: any = {}
-
-    if (search) {
-      where.OR = [
-        { name: { contains: search, mode: 'insensitive' } },
-        { dci: { contains: search, mode: 'insensitive' } },
-      ]
-    }
-
-    if (category) {
-      where.category = category
-    }
-
-    if (available === 'true') {
-      where.available = true
-      where.stock = { gt: 0 }
-    }
-
-    const medicaments = await prisma.medicament.findMany({
-      where,
-      orderBy: {
-        name: 'asc',
-      },
-    })
-
-    return NextResponse.json(medicaments)
-  } catch (error) {
-    console.error('Erreur API medicaments:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la récupération des médicaments' },
-      { status: 500 }
-    )
-  }
+export async function GET() {
+  return new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } });
 }
