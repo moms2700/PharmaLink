@@ -27,36 +27,33 @@ export default function PharmaLink() {
   };
 
   function navBtn(active: boolean): React.CSSProperties {
-    return { background:'none', border:'none', cursor:'pointer', color: active ? '#0066CC' : '#64748b', fontWeight: active ? 700 : 500 };
+    return { background:'none', border:'none', cursor:'pointer', color: active ? '#0066CC' : '#64748b', fontWeight: active ? 700 : 500, padding:'8px 12px' };
   }
 
   const Navigation = () => (
     <header
       style={{
-        position: 'fixed', top: 0, width: '100%', zIndex: 50, background: '#fff',
-        borderBottom: '1px solid #e5e7eb',
+        position:'fixed', top:0, width:'100%', zIndex:50, background:'#fff',
+        borderBottom:'1px solid #e5e7eb',
         boxShadow: scrollY > 50 ? '0 1px 3px rgba(0,0,0,0.08)' : 'none'
       }}
     >
-      <div style={{ maxWidth: 1152, margin: '0 auto', padding: '16px 24px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div style={{ maxWidth:1152, margin:'0 auto', padding:'16px 24px' }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
             <div style={{
-              width: 36, height: 36, borderRadius: 8, display: 'grid', placeItems: 'center',
-              background: 'linear-gradient(135deg,#0066CC,#00CC66)', color: '#fff', fontWeight: 700
+              width:36, height:36, borderRadius:8, display:'grid', placeItems:'center',
+              background:'linear-gradient(135deg,#0066CC,#00CC66)', color:'#fff', fontWeight:700
             }}>PL</div>
-            <span style={{ fontWeight: 700, color: '#0f172a', fontSize: 18 }}>PharmaLink</span>
+            <span style={{ fontWeight:700, color:'#0f172a', fontSize:18 }}>PharmaLink</span>
           </div>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <nav style={{ display:'flex', alignItems:'center', gap:16 }}>
             <button onClick={() => setCurrentPage('home')} style={navBtn(currentPage==='home')}>Accueil</button>
             <button onClick={() => setCurrentPage('medications')} style={navBtn(currentPage==='medications')}>Médicaments</button>
             <button onClick={() => setCurrentPage('pharmacies')} style={navBtn(currentPage==='pharmacies')}>Pharmacies</button>
             <button
               onClick={() => setMobileMenuOpen(v => !v)}
-              style={{
-                border: '1px solid #e5e7eb', background: '#fff', color: '#0f172a',
-                borderRadius: 8, padding: '8px 12px', cursor: 'pointer'
-              }}
+              style={{ border:'1px solid #e5e7eb', background:'#fff', color:'#0f172a', borderRadius:8, padding:'8px 12px', cursor:'pointer' }}
             >{mobileMenuOpen ? 'Fermer' : 'Menu'}</button>
           </nav>
         </div>
@@ -75,7 +72,7 @@ export default function PharmaLink() {
               type="text"
               value={searchValue}
               onChange={(e)=>setSearchValue(e.target.value)}
-              placeholder="Rechercher un médicament..."
+              placeholder="Rechercher un médicament (Doliprane, Ibuprofène...)"
               onKeyDown={(e)=>{ if (e.key==='Enter') handleSearch(); }}
               style={{ flex:1, padding:14, borderRadius:8, border:'none', background:'rgba(255,255,255,0.15)', color:'#fff' }}
             />
@@ -86,10 +83,12 @@ export default function PharmaLink() {
               🔍 Rechercher
             </button>
           </div>
+
           <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16, marginTop:24 }}>
             {[{num:'40+',title:'Médicaments'},{num:'10',title:'Pharmacies'},{num:'2h',title:'Réservation'}].map((s,i)=>(
               <div key={i} style={{ background:'rgba(255,255,255,0.15)', padding:16, borderRadius:8 }}>
-                <div style={{ fontSize:28, fontWeight:800 }}>{s.num}</div><div>{s.title}</div>
+                <div style={{ fontSize:28, fontWeight:800 }}>{s.num}</div>
+                <div>{s.title}</div>
               </div>
             ))}
           </div>
@@ -119,7 +118,7 @@ export default function PharmaLink() {
                 {medications.map((m,i)=>(
                   <div key={i} style={{ background:'#fff', border:'1px solid #e5e7eb', boxShadow:'0 1px 2px rgba(0,0,0,0.06)', borderRadius:8, padding:16, textAlign:'center' }}>
                     <div style={{ fontWeight:700 }}>{m}</div>
-                    <div style={{ color:'#0066CC', marginTop:8, fontSize:14 }}>�� Ajouter</div>
+                    <div style={{ color:'#0066CC', marginTop:8, fontSize:14 }}>🛒 Ajouter</div>
                   </div>
                 ))}
               </div>
