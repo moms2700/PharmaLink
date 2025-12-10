@@ -1,6 +1,26 @@
 'use client';
 import React, { useMemo, useState } from 'react';
-import PharmaciesMap from '../components/PharmaciesMap';
+import dynamic from 'next/dynamic';
+
+// Load PharmaciesMap only on client-side (no SSR) to avoid "window is not defined" error
+const PharmaciesMap = dynamic(() => import('../components/PharmaciesMap'), {
+  ssr: false,
+  loading: () => (
+    <div style={{ 
+      width: '100%', 
+      height: 420, 
+      borderRadius: 8, 
+      overflow: 'hidden',
+      background: '#f1f5f9',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#64748b'
+    }}>
+      Chargement de la carte...
+    </div>
+  ),
+});
 
 type Pharmacy = { id: number; name: string; lat: number; lng: number; garde?: boolean; address?: string; distance?: string; hours?: string };
 

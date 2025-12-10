@@ -560,58 +560,6 @@ async function main() {
     // Contraception & Hygiène intime
     prisma.medicament.create({
       data: {
-        name: 'Préservatifs Durex Classic x12',
-        dci: 'Latex naturel',
-        description: 'Préservatifs en latex naturel pour une protection fiable.',
-        price: 650,
-        category: 'Contraception',
-        dosage: '',
-        form: 'Préservatif',
-        imageUrl: 'https://images.unsplash.com/photo-1563125643-9e5b0f9d8c6e?w=400',
-        stock: 100,
-      },
-    }),
-    prisma.medicament.create({
-      data: {
-        name: 'Préservatifs Durex Invisible x10',
-        dci: 'Latex extra-fin',
-        description: 'Préservatifs ultra-fins pour une sensation optimale.',
-        price: 850,
-        category: 'Contraception',
-        dosage: '',
-        form: 'Préservatif',
-        imageUrl: 'https://images.unsplash.com/photo-1563125643-9e5b0f9d8c6e?w=400',
-        stock: 80,
-      },
-    }),
-    prisma.medicament.create({
-      data: {
-        name: 'Préservatifs Manix Skyn x10',
-        dci: 'Polyisoprène',
-        description: 'Préservatifs sans latex pour peaux sensibles.',
-        price: 900,
-        category: 'Contraception',
-        dosage: '',
-        form: 'Préservatif',
-        imageUrl: 'https://images.unsplash.com/photo-1563125643-9e5b0f9d8c6e?w=400',
-        stock: 70,
-      },
-    }),
-    prisma.medicament.create({
-      data: {
-        name: 'Préservatifs Control Nature x12',
-        dci: 'Latex naturel',
-        description: 'Préservatifs classiques résistants et sûrs.',
-        price: 700,
-        category: 'Contraception',
-        dosage: '',
-        form: 'Préservatif',
-        imageUrl: 'https://images.unsplash.com/photo-1563125643-9e5b0f9d8c6e?w=400',
-        stock: 90,
-      },
-    }),
-    prisma.medicament.create({
-      data: {
         name: 'Test de Grossesse Clearblue',
         dci: 'Test immunologique',
         description: 'Test de grossesse digital avec indicateur de semaines.',
@@ -640,7 +588,7 @@ async function main() {
       data: {
         name: 'Lubrifiant Intime Durex Play',
         dci: 'Gel hydrosoluble',
-        description: 'Lubrifiant intime à base d\'eau, compatible préservatifs.',
+        description: 'Lubrifiant intime à base d\'eau pour le confort intime.',
         price: 950,
         category: 'Contraception',
         dosage: '50ml',
